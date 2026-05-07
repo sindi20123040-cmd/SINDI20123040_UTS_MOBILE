@@ -1,4 +1,4 @@
-// lib/domain/models/product.dart
+import 'isar_product.dart'; // Nanti kita buat file ini
 
 class Product {
   final int id;
@@ -13,12 +13,13 @@ class Product {
     required this.image,
   });
 
-  // Fungsi untuk mengubah data JSON dari API menjadi bentuk Objek Dart
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'],
       title: json['title'],
-      price: json['price'].toDouble(),
+      price: json['price'] is int
+          ? (json['price'] as int).toDouble()
+          : json['price'],
       image: json['image'],
     );
   }
