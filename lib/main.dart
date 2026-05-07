@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'core/locator.dart';
 import 'core/router.dart';
 
-void main() {
+void main() async {
+  // 1. Tambahkan kata 'async' di sini
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator(); // Jalankan get_it
+
+  // 2. Tambahkan 'await' karena setupLocator sekarang butuh waktu untuk buka database
+  await setupLocator();
+
   runApp(const MyApp());
 }
 
