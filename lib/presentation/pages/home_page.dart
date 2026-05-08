@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart'; // Import ini wajib ada
 import '../../core/locator.dart';
 import '../cubit/product_cubit.dart';
 
@@ -21,6 +22,17 @@ class HomePage extends StatelessWidget {
           ),
           backgroundColor: Colors.blueAccent,
           foregroundColor: Colors.white,
+          // TAMBAHAN: Tombol Logout di pojok kanan atas
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+              onPressed: () {
+                // Menghapus tumpukan navigasi dan kembali ke Splash
+                context.go('/');
+              },
+            ),
+          ],
         ),
         backgroundColor: Colors.grey[100],
         body: BlocBuilder<ProductCubit, ProductState>(

@@ -14,7 +14,32 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [const HomePage(), const CryptoPage()];
+  // List halaman: Beranda, Crypto, dan Profil
+  final List<Widget> _pages = [
+    const HomePage(),
+    const CryptoPage(),
+    const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.blueAccent,
+            child: Icon(Icons.person, size: 50, color: Colors.white),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Sindi Rahmadani',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            'NIM: 20123040',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ],
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blueAccent,
         onTap: (index) => setState(() => _selectedIndex = index),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
@@ -29,6 +55,7 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.currency_bitcoin),
             label: 'Crypto',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
         ],
       ),
     );
