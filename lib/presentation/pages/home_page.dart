@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart'; // Import ini wajib ada
+import 'package:go_router/go_router.dart';
 import '../../core/locator.dart';
 import '../cubit/product_cubit.dart';
 
@@ -12,7 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      // Mengambil Cubit dari get_it dan langsung menjalankan fetchProducts()
       create: (_) => locator<ProductCubit>()..fetchProducts(),
       child: Scaffold(
         appBar: AppBar(
@@ -20,93 +19,122 @@ class HomePage extends StatelessWidget {
             'UTD Store Sindi',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.blueAccent,
+          // MENGUBAH WARNA KE PINK
+          backgroundColor: Colors.pinkAccent,
           foregroundColor: Colors.white,
-          // TAMBAHAN: Tombol Logout di pojok kanan atas
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
               tooltip: 'Logout',
-              onPressed: () {
-                // Menghapus tumpukan navigasi dan kembali ke Splash
-                context.go('/');
-              },
+              onPressed: () => context.go('/'),
             ),
           ],
         ),
-        backgroundColor: Colors.grey[100],
-        body: BlocBuilder<ProductCubit, ProductState>(
-          builder: (context, state) {
-            if (state is ProductLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is ProductError) {
-              return Center(child: Text(state.message));
-            } else if (state is ProductLoaded) {
-              return GridView.builder(
-                padding: const EdgeInsets.all(12),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // 2 kotak ke samping
-                  childAspectRatio: 0.65, // Ukuran tinggi kotak
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+        backgroundColor: Colors.pink[50], // Latar belakang pink sangat muda
+        body: Column(
+          children: [
+            // FITUR TAMBAHAN: Search Bar
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Cari produk di UTD Store...",
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Colors.pinkAccent,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 ),
-                itemCount: state.products.length,
-                itemBuilder: (context, index) {
-                  final product = state.products[index];
-                  return Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(15),
-                            ),
-                            child: Image.network(
-                              product.image,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
+              ),
+            ),
+            // Daftar Produk
+            Expanded(
+              child: BlocBuilder<ProductCubit, ProductState>(
+                builder: (context, state) {
+                  if (state is ProductLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.pinkAccent,
+                      ),
+                    );
+                  } else if (state is ProductError) {
+                    return Center(child: Text(state.message));
+                  } else if (state is ProductLoaded) {
+                    return GridView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.65,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      itemCount: state.products.length,
+                      itemBuilder: (context, index) {
+                        final product = state.products[index];
+                        return Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                product.title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(15),
+                                  ),
+                                  child: Image.network(
+                                    product.image,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                  ),
                                 ),
                               ),
-                              const SizedBox(height: 5),
-                              Text(
-                                '\$${product.price}',
-                                style: const TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product.title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      '\$${product.price}',
+                                      style: const TextStyle(
+                                        color: Colors.pinkAccent,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
+                  return const Center(child: Text('Tidak ada data'));
                 },
-              );
-            }
-            return const Center(child: Text('Tidak ada data'));
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );
