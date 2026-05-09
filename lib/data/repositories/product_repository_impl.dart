@@ -8,7 +8,7 @@ class ProductRepositoryImpl implements ProductRepository {
   final Dio dio;
 
   ProductRepositoryImpl(this.dio) {
-    // Memasang Interceptor bawaan Dio untuk menampilkan log (sesuai syarat soal)
+    // Memasang Interceptor bawaan Dio
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   }
 
@@ -21,8 +21,7 @@ class ProductRepositoryImpl implements ProductRepository {
           .map((json) => Product.fromJson(json))
           .toList();
 
-      // LOGIKA PERSONAL: NIM Sindi belakangnya 0 (Genap).
-      // Tambahkan teks "[Promo Ongkir]" di belakang nama produk.
+      // LOGIKA PERSONAL: NIM Sindi belakangnya 0 dan gratis ongkir
       return products.map((product) {
         return Product(
           id: product.id,

@@ -1,5 +1,3 @@
-// lib/presentation/pages/crypto_page.dart
-
 import 'package:flutter/material.dart';
 import '../../core/locator.dart';
 import '../../domain/crypto_service.dart';
@@ -18,8 +16,6 @@ class _CryptoPageState extends State<CryptoPage> {
   void _runHeavyTask() async {
     setState(() => _isLoading = true);
 
-    // LOGIKA PERSONAL NIM: 20123040
-    // Kita pakai 40 juta iterasi (dari 2 digit terakhir NIM) agar terasa "berat"
     final calculation = await locator<CryptoService>().calculateInvestment(
       1000,
       40000000,

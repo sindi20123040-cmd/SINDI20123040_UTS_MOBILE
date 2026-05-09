@@ -1,5 +1,3 @@
-// lib/presentation/pages/home_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +17,7 @@ class HomePage extends StatelessWidget {
             'UTD Store Sindi',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          // MENGUBAH WARNA KE PINK
+
           backgroundColor: Colors.pinkAccent,
           foregroundColor: Colors.white,
           actions: [
@@ -30,10 +28,9 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: Colors.pink[50], // Latar belakang pink sangat muda
+        backgroundColor: Colors.pink[50],
         body: Column(
           children: [
-            // FITUR TAMBAHAN: Search Bar
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(

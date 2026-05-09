@@ -28,7 +28,7 @@ class ProductCubit extends Cubit<ProductState> {
   ProductCubit(this.repository) : super(ProductInitial());
 
   void fetchProducts() async {
-    emit(ProductLoading()); // Ubah state jadi loading (menampilkan muter-muter)
+    emit(ProductLoading()); // Ubah state jadi loading
     try {
       final products = await repository.getProducts();
       emit(ProductLoaded(products)); // Jika sukses, tampilkan data
